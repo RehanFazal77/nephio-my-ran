@@ -1,0 +1,75 @@
+# Standard namespaces for network functions
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /openairinterface
+  name: openairinterface # kpt-set: ${namespace-prefix}openairinterface
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: ran
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|openairinterface'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /free5gc
+  name: free5gc # kpt-set: ${namespace-prefix}free5gc
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: core
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /oai-ran-cucp
+  name: oai-ran-cucp
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: ran
+    nephio.org/nf-type: cucp
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-cucp'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /oai-ran-cuup
+  name: oai-ran-cuup
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: ran
+    nephio.org/nf-type: cuup
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-cuup'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /oai-ran-du
+  name: oai-ran-du
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: ran
+    nephio.org/nf-type: du
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-du'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /free5gc-cp
+  name: free5gc-cp
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: core
+    nephio.org/plane: control
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc-cp'
+---
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /free5gc-up
+  name: free5gc-up
+  labels:
+    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/workload-type: core
+    nephio.org/plane: user
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc-up'
