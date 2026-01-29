@@ -21,6 +21,18 @@ metadata: # kpt-merge: /local-path-storage
   annotations:
     internal.kpt.dev/upstream-identifier: '|Namespace|default|local-path-storage'
 ---
+# Namespace for ConfigSync
+apiVersion: v1
+kind: Namespace
+metadata: # kpt-merge: /config-management-system
+  name: config-management-system
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/warn: privileged
+  annotations:
+    internal.kpt.dev/upstream-identifier: '|Namespace|default|config-management-system'
+---
 # Baseline mode for network function namespaces
 # OAI and Free5GC need some elevated privileges but not fully privileged
 apiVersion: v1
