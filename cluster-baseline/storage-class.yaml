@@ -8,6 +8,16 @@
 #   statusMode: enabled
 #   logLevels:
 #     - debug
+# Optional: Override settings (advanced)
+# override:
+#   resources:
+#     - group: apps
+#       kind: Deployment
+#       name: my-app
+#       namespace: default
+#   statusMode: enabled
+#   logLevels:
+#     - debug
 # Default storage class - local path provisioning
 apiVersion: storage.k8s.io/v1
 # Optional: For private repositories, reference a secret
