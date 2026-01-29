@@ -1,0 +1,33 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /multus-cni
+  name: multus-cni
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: 'kpt.dev|Kptfile|default|multus-cni'
+upstream:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints.git
+    directory: networking/multus-cni
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints.git
+    directory: networking/multus-cni
+    ref: main
+    commit: 95bc78712847f09d08e0547291e87b8c9ddd468b
+info:
+  site: https://github.com/k8snetworkplumbingwg/multus-cni
+  description: Multus CNI DaemonSet for multi-interface support
+  keywords:
+  - multus
+  - cni
+  - networking
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-plugins-image: ghcr.io/k8snetworkplumbingwg/cni-plugins:v1.2.0
+      multus-image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2
