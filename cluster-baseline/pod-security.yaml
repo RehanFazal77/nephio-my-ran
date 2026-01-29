@@ -1,132 +1,101 @@
 # Privileged mode for system namespaces (needed for CNI, storage, etc)
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /kube-system
+metadata:
   name: kube-system
   labels:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/audit: privileged
     pod-security.kubernetes.io/warn: privileged
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|kube-system'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /local-path-storage
+metadata:
   name: local-path-storage
   labels:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/audit: privileged
     pod-security.kubernetes.io/warn: privileged
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|local-path-storage'
 ---
-# Namespace for ConfigSync
-apiVersion: v1
-kind: Namespace
-metadata: # kpt-merge: /config-management-system
-  name: config-management-system
-  labels:
-    pod-security.kubernetes.io/enforce: privileged
-    pod-security.kubernetes.io/audit: privileged
-    pod-security.kubernetes.io/warn: privileged
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|config-management-system'
----
-# Baseline mode for network function namespaces
 # OAI and Free5GC need some elevated privileges but not fully privileged
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /openairinterface
-  name: openairinterface # kpt-set: ${namespace-prefix}openairinterface
+metadata:
+  name: openairinterface
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: ran
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|openairinterface'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /oai-ran-cucp
+metadata:
   name: oai-ran-cucp
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: ran
     nephio.org/nf-type: cucp
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-cucp'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /oai-ran-cuup
+metadata:
   name: oai-ran-cuup
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: ran
     nephio.org/nf-type: cuup
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-cuup'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /oai-ran-du
+metadata:
   name: oai-ran-du
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: ran
     nephio.org/nf-type: du
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-du'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /free5gc
-  name: free5gc # kpt-set: ${namespace-prefix}free5gc
+metadata:
+  name: free5gc
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: core
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /free5gc-cp
+metadata:
   name: free5gc-cp
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: core
     nephio.org/plane: control
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc-cp'
 ---
 apiVersion: v1
 kind: Namespace
-metadata: # kpt-merge: /free5gc-up
+metadata:
   name: free5gc-up
   labels:
-    nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
+    nephio.org/cluster-name: my-ran
     nephio.org/workload-type: core
     nephio.org/plane: user
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|free5gc-up'
