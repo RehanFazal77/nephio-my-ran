@@ -21,6 +21,7 @@ metadata: # kpt-merge: /local-path-storage
   annotations:
     internal.kpt.dev/upstream-identifier: '|Namespace|default|local-path-storage'
 ---
+# Namespace for ConfigSync
 apiVersion: v1
 kind: Namespace
 metadata: # kpt-merge: /config-management-system
@@ -37,7 +38,7 @@ metadata: # kpt-merge: /config-management-system
 apiVersion: v1
 kind: Namespace
 metadata: # kpt-merge: /openairinterface
-  name: openairinterface
+  name: openairinterface # kpt-set: ${namespace-prefix}openairinterface
   labels:
     nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
     nephio.org/workload-type: ran
@@ -92,7 +93,7 @@ metadata: # kpt-merge: /oai-ran-du
 apiVersion: v1
 kind: Namespace
 metadata: # kpt-merge: /free5gc
-  name: free5gc
+  name: free5gc # kpt-set: ${namespace-prefix}free5gc
   labels:
     nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
     nephio.org/workload-type: core
