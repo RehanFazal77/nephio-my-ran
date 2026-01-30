@@ -26,6 +26,10 @@ info:
   - 5g
 pipeline:
   mutators:
+  - name: PackageVariant.network-intents-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cluster-name: my-ran
   - image: gcr.io/kpt-fn/apply-setters:v0.2
     configMap:
       control-plane-gateway: 192.168.10.1
