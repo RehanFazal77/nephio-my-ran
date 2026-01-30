@@ -1,0 +1,46 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /network-intents
+  name: network-intents
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: kpt.dev|Kptfile|default|network-intents
+upstream:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints.git
+    directory: network-intents-configured
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints.git
+    directory: network-intents-configured
+    ref: main
+    commit: adad2bb14b641ace249b0639a1f25968328419f0
+info:
+  description: High-level network intent definitions for control and user planes
+  keywords:
+  - network
+  - intent
+  - 5g
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      interface-name: eth0
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+    name: PackageVariant.network-intents..0
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      control-plane-vlan: "100"
+      interface-name: eth0
+      mtu: "1500"
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+      user-plane-vlan: "200"
