@@ -26,6 +26,13 @@ info:
   - networking
 pipeline:
   mutators:
+  - name: PackageVariant.nad-renderer-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      target-namespace: openairinterface
+  - name: PackageVariant.nad-renderer-my-ran..1
+    image: docker.io/nephio/nad-fn:v3.0.0
+    configPath: nad-renderer-config.yaml
   - image: gcr.io/kpt-fn/apply-setters:v0.2
     configMap:
       target-namespace: default
