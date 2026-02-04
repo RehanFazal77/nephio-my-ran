@@ -27,6 +27,10 @@ info:
   - cni
 pipeline:
   mutators:
+  - name: PackageVariant.whereabouts-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      whereabouts-image: ghcr.io/k8snetworkplumbingwg/whereabouts:v0.6.3
   - image: gcr.io/kpt-fn/apply-setters:v0.2
     configMap:
       whereabouts-image: ghcr.io/k8snetworkplumbingwg/whereabouts:v0.6.3
