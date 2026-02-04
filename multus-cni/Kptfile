@@ -28,6 +28,11 @@ info:
   - macvlan
 pipeline:
   mutators:
+  - name: PackageVariant.multus-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-plugins-image: ghcr.io/k8snetworkplumbingwg/cni-plugins:v1.2.0
+      multus-image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2
   - image: gcr.io/kpt-fn/apply-setters:v0.2
     configMap:
       cni-plugins-image: ghcr.io/k8snetworkplumbingwg/cni-plugins:v1.2.0
