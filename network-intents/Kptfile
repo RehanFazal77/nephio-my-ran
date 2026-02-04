@@ -1,0 +1,40 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /network-intents
+  name: network-intents
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'kpt.dev|Kptfile|default|network-intents'
+upstream:
+  type: git
+  git:
+    repo: https://github.com/rehanfazal77/nephio-blueprints.git
+    directory: networking/network-intents
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/rehanfazal77/nephio-blueprints.git
+    directory: networking/network-intents
+    ref: main
+    commit: 5ed402a6edde93d9814d76e4f7f037ad0a930700
+info:
+  description: Network intents for 5G workloads
+  keywords:
+  - network-intents
+  - macvlan
+  - 5g
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-type: macvlan
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      control-plane-vlan: "0"
+      interface-name: eth0
+      macvlan-mode: bridge
+      mtu: "1500"
+      target-namespace: default
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+      user-plane-vlan: "0"
