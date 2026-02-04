@@ -1,0 +1,34 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /nad-renderer
+  name: nad-renderer
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: 'kpt.dev|Kptfile|default|nad-renderer'
+upstream:
+  type: git
+  git:
+    repo: https://github.com/rehanfazal77/nephio-blueprints.git
+    directory: networking/nad-renderer
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/rehanfazal77/nephio-blueprints.git
+    directory: networking/nad-renderer
+    ref: main
+    commit: 5ed402a6edde93d9814d76e4f7f037ad0a930700
+info:
+  description: Renders NetworkAttachmentDefinitions from NetworkIntents
+  keywords:
+  - nad
+  - renderer
+  - networking
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      target-namespace: default
+  - image: docker.io/nephio/nad-fn:v3.0.0
+    configPath: nad-renderer-config.yaml
+status: {}
