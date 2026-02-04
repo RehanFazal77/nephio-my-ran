@@ -25,6 +25,20 @@ info:
   - 5g
 pipeline:
   mutators:
+  - name: PackageVariant.network-intents-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-type: macvlan
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      control-plane-vlan: "0"
+      interface-name: eth0
+      macvlan-mode: bridge
+      mtu: "1500"
+      target-namespace: openairinterface
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+      user-plane-vlan: "0"
   - image: gcr.io/kpt-fn/apply-setters:v0.2
     configMap:
       cni-type: macvlan
