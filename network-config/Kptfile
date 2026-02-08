@@ -1,0 +1,71 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /network-config
+  name: network-config
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: 'kpt.dev|Kptfile|default|network-config'
+upstream:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints-approachB.git
+    directory: networking/network-config
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints-approachB.git
+    directory: networking/network-config
+    ref: main
+    commit: 34d08aad5b20a6d3449b860591eee5d62c8322ca
+info:
+  description: |
+    APPROACH B: All-in-one network configuration package.
+    Contains NetworkIntents + NADRendererConfig + nad-fn pipeline.
+    This bypasses the broken Porch injector mechanism.
+
+    Key difference from Approach A:
+    - NetworkIntents are EMBEDDED in this package (not separate)
+    - nad-fn processes them directly (no injection needed)
+    - NADs are generated automatically
+  keywords:
+  - network-config
+  - nad
+  - network-intents
+  - 5g
+  - approach-b
+pipeline:
+  mutators:
+  - name: PackageVariant.network-config-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-type: macvlan
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      control-plane-vlan: "0"
+      interface-name: eth0
+      macvlan-mode: bridge
+      mtu: "1500"
+      target-namespace: openairinterface
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+      user-plane-vlan: "0"
+  - name: PackageVariant.network-config-my-ran..1
+    image: docker.io/nephio/nad-fn:v3.0.0
+    configPath: nad-renderer-config.yaml
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      cni-type: macvlan
+      control-plane-gateway: 192.168.10.1
+      control-plane-range: 192.168.10.0/24
+      control-plane-vlan: "0"
+      interface-name: eth0
+      macvlan-mode: bridge
+      mtu: "1500"
+      target-namespace: openairinterface
+      user-plane-gateway: 192.168.20.1
+      user-plane-range: 192.168.20.0/24
+      user-plane-vlan: "0"
+  - image: docker.io/nephio/nad-fn:v3.0.0
+    configPath: nad-renderer-config.yaml
+status: {}
