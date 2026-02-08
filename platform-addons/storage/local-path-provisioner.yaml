@@ -1,61 +1,49 @@
 # Local Path Provisioner for dynamic PV provisioning on bare-metal
-apiVersion: v1
-kind: Namespace
-metadata: # kpt-merge: /local-path-storage
-  name: local-path-storage
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|Namespace|default|local-path-storage'
----
+# NOTE: Namespace and StorageClass are defined in cluster-baseline package
+# This file only contains the Deployment, RBAC, and ConfigMap
+
 apiVersion: v1
 kind: ServiceAccount
-metadata: # kpt-merge: local-path-storage/local-path-provisioner-service-account
+metadata:
   name: local-path-provisioner-service-account
   namespace: local-path-storage
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|ServiceAccount|local-path-storage|local-path-provisioner-service-account'
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
-metadata: # kpt-merge: /local-path-provisioner-role
+metadata:
   name: local-path-provisioner-role
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|ClusterRole|default|local-path-provisioner-role'
 rules:
-- apiGroups: [""]
-  resources: [nodes, persistentvolumeclaims, configmaps]
-  verbs: [get, list, watch]
-- apiGroups: [""]
-  resources: [endpoints, persistentvolumes, pods]
-  verbs: ['*']
-- apiGroups: [""]
-  resources: [events]
-  verbs: [create, patch]
-- apiGroups: [storage.k8s.io]
-  resources: [storageclasses]
-  verbs: [get, list, watch]
+  - apiGroups: [""]
+    resources: [nodes, persistentvolumeclaims, configmaps]
+    verbs: [get, list, watch]
+  - apiGroups: [""]
+    resources: [endpoints, persistentvolumes, pods]
+    verbs: ['*']
+  - apiGroups: [""]
+    resources: [events]
+    verbs: [create, patch]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [get, list, watch]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
-metadata: # kpt-merge: /local-path-provisioner-bind
+metadata:
   name: local-path-provisioner-bind
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'rbac.authorization.k8s.io|ClusterRoleBinding|default|local-path-provisioner-bind'
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: local-path-provisioner-role
 subjects:
-- kind: ServiceAccount
-  name: local-path-provisioner-service-account
-  namespace: local-path-storage
+  - kind: ServiceAccount
+    name: local-path-provisioner-service-account
+    namespace: local-path-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
-metadata: # kpt-merge: local-path-storage/local-path-provisioner
+metadata:
   name: local-path-provisioner
   namespace: local-path-storage
-  annotations:
-    internal.kpt.dev/upstream-identifier: 'apps|Deployment|local-path-storage|local-path-provisioner'
 spec:
   replicas: 1
   selector:
@@ -68,35 +56,33 @@ spec:
     spec:
       serviceAccountName: local-path-provisioner-service-account
       containers:
-      - name: local-path-provisioner
-        image: rancher/local-path-provisioner:v0.0.26
-        imagePullPolicy: IfNotPresent
-        command:
-        - local-path-provisioner
-        - --debug
-        - start
-        - --config
-        - /etc/config/config.json
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config/
-        env:
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
+        - name: local-path-provisioner
+          image: rancher/local-path-provisioner:v0.0.26
+          imagePullPolicy: IfNotPresent
+          command:
+            - local-path-provisioner
+            - --debug
+            - start
+            - --config
+            - /etc/config/config.json
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config/
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
       volumes:
-      - name: config-volume
-        configMap:
-          name: local-path-config
+        - name: config-volume
+          configMap:
+            name: local-path-config
 ---
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: local-path-storage/local-path-config
+metadata:
   name: local-path-config
   namespace: local-path-storage
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|ConfigMap|local-path-storage|local-path-config'
 data:
   config.json: |-
     {
@@ -125,14 +111,3 @@ data:
       - name: helper-pod
         image: busybox:latest
         imagePullPolicy: IfNotPresent
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata: # kpt-merge: /local-path
-  name: local-path # kpt-set: ${storage-class-name}
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-    internal.kpt.dev/upstream-identifier: 'storage.k8s.io|StorageClass|default|local-path'
-provisioner: rancher.io/local-path
-volumeBindingMode: WaitForFirstConsumer
-reclaimPolicy: Delete
