@@ -89,34 +89,23 @@ spec:
           mountPath: /host/opt/cni/bin
       initContainers:
       - name: install-cni-plugins
-        image: ghcr.io/k8snetworkplumbingwg/plugins:v1.6.2
-        command: ["/bin/sh", "-c"]
-        args:
+        image: ghcr.io/k8snetworkplumbingwg/plugins:v1.6.2 # kpt-set: ${cni-plugins-image}
+        command:
+          - "sh"
+          - "-c"
           - |
-            echo "=== Searching for CNI plugins in image ==="
-            find / -name macvlan -type f 2>/dev/null || true
-            echo "=== Listing common CNI paths ==="
-            ls -la /opt/cni/bin/ 2>/dev/null || true
-            ls -la /plugins/ 2>/dev/null || true
-            ls -la / 2>/dev/null | grep -E "macvlan|ipvlan|bridge|tuning" || true
-            echo "=== Checking host /opt/cni/bin ==="
-            ls -la /host/opt/cni/bin/ 2>/dev/null || true
-            echo "=== Attempting copies from all known paths ==="
-            for plugin in macvlan ipvlan bridge tuning; do
-              SRC=$(find / -name "$plugin" -type f ! -path "/host/*" ! -path "/proc/*" ! -path "/sys/*" 2>/dev/null | head -1)
-              if [ -n "$SRC" ]; then
-                echo "Found $plugin at $SRC, copying..."
-                cp "$SRC" /host/opt/cni/bin/
-                chmod +x /host/opt/cni/bin/$plugin
-              elif [ -f /host/opt/cni/bin/$plugin ]; then
-                echo "$plugin already exists on host, skipping"
-              else
-                echo "WARNING: $plugin not found in image or on host"
-              fi
-            done
-            echo "=== Final state of /host/opt/cni/bin ==="
-            ls -la /host/opt/cni/bin/ | grep -E "macvlan|ipvlan|bridge|tuning" || true
-            echo "Done"
+            cp /opt/cni/bin/macvlan /host/opt/cni/bin/macvlan
+            cp /opt/cni/bin/ipvlan /host/opt/cni/bin/ipvlan
+            cp /opt/cni/bin/vlan /host/opt/cni/bin/vlan
+            cp /opt/cni/bin/bridge /host/opt/cni/bin/bridge
+            cp /opt/cni/bin/host-device /host/opt/cni/bin/host-device
+            cp /opt/cni/bin/tuning /host/opt/cni/bin/tuning
+            chmod +x /host/opt/cni/bin/macvlan
+            chmod +x /host/opt/cni/bin/ipvlan
+            chmod +x /host/opt/cni/bin/vlan
+            chmod +x /host/opt/cni/bin/bridge
+            chmod +x /host/opt/cni/bin/host-device
+            chmod +x /host/opt/cni/bin/tuning
         securityContext:
           privileged: true
         volumeMounts:
