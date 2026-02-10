@@ -1,0 +1,147 @@
+# N2 Network (gNB <-> AMF signaling, SCTP/NGAP)
+# Required for: OAI gNB, Free5GC AMF
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata: # kpt-merge: openairinterface/n2-net
+  name: n2-net
+  namespace: openairinterface # kpt-set: ${target-namespace}
+  labels:
+    nephio.org/network: n2
+    nephio.org/interface-type: control-plane
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'k8s.cni.cncf.io|NetworkAttachmentDefinition|openairinterface|n2-net'
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true },
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "whereabouts",
+            "range": "192.168.10.0/24",
+            "gateway": "192.168.10.1",
+            "range_start": "192.168.10.10",
+            "range_end": "192.168.10.250"
+          }
+        },
+        {
+          "capabilities": { "mac": true },
+          "type": "tuning"
+        }
+      ]
+    }
+---
+# N3 Network (gNB <-> UPF user data, GTP-U)
+# Required for: OAI gNB, Free5GC UPF
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata: # kpt-merge: openairinterface/n3-net
+  name: n3-net
+  namespace: openairinterface # kpt-set: ${target-namespace}
+  labels:
+    nephio.org/network: n3
+    nephio.org/interface-type: user-plane
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'k8s.cni.cncf.io|NetworkAttachmentDefinition|openairinterface|n3-net'
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true },
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "whereabouts",
+            "range": "192.168.11.0/24",
+            "gateway": "192.168.11.1",
+            "range_start": "192.168.11.10",
+            "range_end": "192.168.11.250"
+          }
+        },
+        {
+          "capabilities": { "mac": true },
+          "type": "tuning"
+        }
+      ]
+    }
+---
+# N4 Network (SMF <-> UPF control, PFCP)
+# Required for: Free5GC SMF, Free5GC UPF
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata: # kpt-merge: openairinterface/n4-net
+  name: n4-net
+  namespace: openairinterface # kpt-set: ${target-namespace}
+  labels:
+    nephio.org/network: n4
+    nephio.org/interface-type: control-plane
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'k8s.cni.cncf.io|NetworkAttachmentDefinition|openairinterface|n4-net'
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true },
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "whereabouts",
+            "range": "192.168.12.0/24",
+            "gateway": "192.168.12.1",
+            "range_start": "192.168.12.10",
+            "range_end": "192.168.12.250"
+          }
+        },
+        {
+          "capabilities": { "mac": true },
+          "type": "tuning"
+        }
+      ]
+    }
+---
+# N6 Network (UPF <-> Data Network / Internet)
+# Required for: Free5GC UPF
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata: # kpt-merge: openairinterface/n6-net
+  name: n6-net
+  namespace: openairinterface # kpt-set: ${target-namespace}
+  labels:
+    nephio.org/network: n6
+    nephio.org/interface-type: data-network
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'k8s.cni.cncf.io|NetworkAttachmentDefinition|openairinterface|n6-net'
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "capabilities": { "ips": true },
+          "master": "eth0",
+          "mode": "bridge",
+          "ipam": {
+            "type": "whereabouts",
+            "range": "192.168.13.0/24",
+            "gateway": "192.168.13.1",
+            "range_start": "192.168.13.10",
+            "range_end": "192.168.13.250"
+          }
+        },
+        {
+          "capabilities": { "mac": true },
+          "type": "tuning"
+        }
+      ]
+    }
