@@ -1,0 +1,74 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /network-config
+  name: network-config
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: 'kpt.dev|Kptfile|default|network-config'
+upstream:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints-approachB.git
+    directory: networking/network-config
+    ref: main
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/RehanFazal77/nephio-blueprints-approachB.git
+    directory: networking/network-config
+    ref: main
+    commit: c3ae8dca0564a7648894bd53487f8e06f8adc6ed
+info:
+  description: |
+    Network Attachment Definitions for 5G workloads.
+    Deployed directly by ConfigSync - no nad-fn needed.
+    Namespaces are defined in cluster-baseline - NOT here.
+  keywords:
+  - nephio
+  - networking
+  - nad
+  - multus
+  - 5g
+pipeline:
+  mutators:
+  - name: PackageVariant.network-config-my-ran..0
+    image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      master-interface: eth0
+      n2-gateway: 192.168.10.1
+      n2-range-end: 192.168.10.250
+      n2-range-start: 192.168.10.10
+      n2-subnet: 192.168.10.0/24
+      n3-gateway: 192.168.11.1
+      n3-range-end: 192.168.11.250
+      n3-range-start: 192.168.11.10
+      n3-subnet: 192.168.11.0/24
+      n4-gateway: 192.168.12.1
+      n4-range-end: 192.168.12.250
+      n4-range-start: 192.168.12.10
+      n4-subnet: 192.168.12.0/24
+      n6-gateway: 192.168.13.1
+      n6-range-end: 192.168.13.250
+      n6-range-start: 192.168.13.10
+      n6-subnet: 192.168.13.0/24
+      target-namespace: openairinterface
+  - image: gcr.io/kpt-fn/apply-setters:v0.2
+    configMap:
+      master-interface: eth0
+      n2-gateway: 192.168.10.1
+      n2-range-end: 192.168.10.250
+      n2-range-start: 192.168.10.10
+      n2-subnet: 192.168.10.0/24
+      n3-gateway: 192.168.11.1
+      n3-range-end: 192.168.11.250
+      n3-range-start: 192.168.11.10
+      n3-subnet: 192.168.11.0/24
+      n4-gateway: 192.168.12.1
+      n4-range-end: 192.168.12.250
+      n4-range-start: 192.168.12.10
+      n4-subnet: 192.168.12.0/24
+      n6-gateway: 192.168.13.1
+      n6-range-end: 192.168.13.250
+      n6-range-start: 192.168.13.10
+      n6-subnet: 192.168.13.0/24
+      target-namespace: openairinterface
