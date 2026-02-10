@@ -89,7 +89,7 @@ spec:
           mountPath: /host/opt/cni/bin
       initContainers:
       - name: install-cni-plugins
-        image: ghcr.io/containernetworking/plugins:v1.4.1
+        image: ghcr.io/k8snetworkplumbingwg/plugins:v1.6.2
         command: ["/bin/sh", "-c"]
         args:
           - "cp /opt/cni/bin/macvlan /host/opt/cni/bin/ && cp /opt/cni/bin/ipvlan /host/opt/cni/bin/ && cp /opt/cni/bin/bridge /host/opt/cni/bin/ && cp /opt/cni/bin/tuning /host/opt/cni/bin/ && chmod +x /host/opt/cni/bin/macvlan /host/opt/cni/bin/ipvlan /host/opt/cni/bin/bridge /host/opt/cni/bin/tuning && echo 'CNI plugins installed successfully'"
