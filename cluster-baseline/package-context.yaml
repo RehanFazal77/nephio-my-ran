@@ -8,3 +8,6 @@ metadata: # kpt-merge: /kptfile.kpt.dev
 data:
   name: cluster-baseline
   package-path: cluster-baseline
+  cluster-type: workload
+  cluster-name: my-ran
+  workload-type: ran
