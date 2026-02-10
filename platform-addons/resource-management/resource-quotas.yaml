@@ -1,10 +1,13 @@
+# Resource quotas for network function namespaces
+# NOTE: LimitRange resources are already defined in cluster-baseline
+# This file only contains ResourceQuotas to avoid duplicates
+
+---
 apiVersion: v1
 kind: ResourceQuota
-metadata: # kpt-merge: openairinterface/ran-quota
+metadata:
   name: ran-quota
   namespace: openairinterface
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|ResourceQuota|openairinterface|ran-quota'
 spec:
   hard:
     requests.cpu: "20"
@@ -15,11 +18,9 @@ spec:
 ---
 apiVersion: v1
 kind: ResourceQuota
-metadata: # kpt-merge: free5gc/core-quota
+metadata:
   name: core-quota
   namespace: free5gc
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|ResourceQuota|free5gc|core-quota'
 spec:
   hard:
     requests.cpu: "20"
@@ -27,37 +28,3 @@ spec:
     limits.cpu: "30"
     limits.memory: 60Gi
     persistentvolumeclaims: "10"
----
-apiVersion: v1
-kind: LimitRange
-metadata: # kpt-merge: openairinterface/default-limits
-  name: default-limits
-  namespace: openairinterface
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|LimitRange|openairinterface|default-limits'
-spec:
-  limits:
-  - default:
-      cpu: "2"
-      memory: 4Gi
-    defaultRequest:
-      cpu: "500m"
-      memory: 1Gi
-    type: Container
----
-apiVersion: v1
-kind: LimitRange
-metadata: # kpt-merge: free5gc/default-limits
-  name: default-limits
-  namespace: free5gc
-  annotations:
-    internal.kpt.dev/upstream-identifier: '|LimitRange|free5gc|default-limits'
-spec:
-  limits:
-  - default:
-      cpu: "2"
-      memory: 4Gi
-    defaultRequest:
-      cpu: "500m"
-      memory: 1Gi
-    type: Container
