@@ -71,7 +71,7 @@ spec:
         effect: NoExecute
       containers:
       - name: kube-multus
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2 # kpt-set: ${multus-image}
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick # kpt-set: ${multus-image}
         command: ["/thin_entrypoint"]
         args:
         - "--multus-conf-file=auto"
