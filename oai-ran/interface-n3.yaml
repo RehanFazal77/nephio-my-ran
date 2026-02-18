@@ -17,3 +17,7 @@ spec:
   networkInstance:
     name: vpc-userplane
   cniType: macvlan
+status:
+  ipClaimStatus:
+  - prefix: 10.1.3.0/24
+    gateway: ""

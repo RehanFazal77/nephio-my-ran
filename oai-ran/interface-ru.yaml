@@ -17,3 +17,7 @@ spec:
   networkInstance:
     name: vpc-fronthaul
   cniType: macvlan
+status:
+  ipClaimStatus:
+  - prefix: 10.2.6.0/24
+    gateway: ""
