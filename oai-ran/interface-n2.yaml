@@ -1,0 +1,23 @@
+# Interface for N2 (Control Plane - gNB to AMF)
+apiVersion: req.nephio.org/v1alpha1
+kind: Interface
+metadata: # kpt-merge: oai-ran/n2
+  name: n2
+  namespace: oai-ran
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    specializer.nephio.org/owner: workload.nephio.org/v1alpha1.NFDeployment.gnb
+    specializer.nephio.org/namespace: oai-ran
+    internal.kpt.dev/upstream-identifier: 'req.nephio.org|Interface|oai-ran|n2'
+  labels:
+    nephio.org/interface: n2
+    nephio.org/nf: gnb
+    nephio.org/deployment-type: monolithic
+spec:
+  networkInstance:
+    name: vpc-control
+  cniType: macvlan
+status:
+  ipClaimStatus:
+  - prefix: 10.1.2.0/24
+    gateway: ""
