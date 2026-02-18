@@ -14,4 +14,4 @@ spec:
       nephio.org/cluster-name: my-ran
   networkInstance:
     name: vpc-userplane
-status: {}
+status: {prefix: 10.1.3.0/24, gateway: ""}

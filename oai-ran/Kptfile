@@ -42,29 +42,29 @@ status:
     status: "True"
     message: injected resource "my-ran" from cluster
     reason: ConfigInjected
-  - message: update resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n2
-    status: "False"
+    status: "True"
     type: ipam.resource.nephio.org/v1alpha1.IPClaim.gnb-n2-ipv4
-  - message: update resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n3
-    status: "False"
+    status: "True"
     type: ipam.resource.nephio.org/v1alpha1.IPClaim.gnb-n3-ipv4
-  - message: update resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.ru
-    status: "False"
+    status: "True"
     type: ipam.resource.nephio.org/v1alpha1.IPClaim.gnb-ru-ipv4
-  - message: create initial resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n2
-    status: "False"
+    status: "True"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.gnb-n2
-  - message: create initial resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n3
-    status: "False"
+    status: "True"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.gnb-n3
-  - message: create initial resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.ru
-    status: "False"
+    status: "True"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.gnb-ru
   - message: update for condition
     status: "False"

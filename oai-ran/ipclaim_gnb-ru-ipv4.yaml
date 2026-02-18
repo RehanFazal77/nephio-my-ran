@@ -14,4 +14,4 @@ spec:
       nephio.org/cluster-name: my-ran
   networkInstance:
     name: vpc-fronthaul
-status: {}
+status: {prefix: 10.2.6.0/24, gateway: ""}
