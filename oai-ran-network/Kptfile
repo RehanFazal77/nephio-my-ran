@@ -66,12 +66,12 @@ status:
     reason: req.nephio.org/v1alpha1.Interface.n2
     status: "True"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.cucp-n2
-  - message: update for condition
-    status: "False"
+  - message: update done
+    status: "True"
     type: req.nephio.org/v1alpha1.Interface.e1
-  - message: update for condition
-    status: "False"
+  - message: update done
+    status: "True"
     type: req.nephio.org/v1alpha1.Interface.f1c
-  - message: update for condition
-    status: "False"
+  - message: update done
+    status: "True"
     type: req.nephio.org/v1alpha1.Interface.n2
