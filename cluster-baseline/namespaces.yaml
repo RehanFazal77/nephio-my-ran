@@ -33,7 +33,9 @@ metadata: # kpt-merge: /oai-ran-cucp
     nephio.org/cluster-name: my-ran # kpt-set: ${cluster-name}
     nephio.org/workload-type: ran
     nephio.org/nf-type: cucp
-    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/audit: privileged
   annotations:
     internal.kpt.dev/upstream-identifier: '|Namespace|default|oai-ran-cucp'
 ---
