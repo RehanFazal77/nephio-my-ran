@@ -65,7 +65,7 @@ status:
     reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
     status: "True"
     type: req.nephio.org/v1alpha1.Capacity.control-plane
-  - message: create initial resource
+  - message: 'rpc error: code = Unknown desc = db not initialized: { default vpc-internal    }'
     reason: req.nephio.org/v1alpha1.Interface.n4
     status: "False"
     type: ipam.resource.nephio.org/v1alpha1.IPClaim.smf-ran-n4-ipv4
@@ -73,7 +73,7 @@ status:
     reason: req.nephio.org/v1alpha1.Interface.n4
     status: "False"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.smf-ran-n4
-  - message: create initial resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n4
-    status: "False"
+    status: "True"
     type: vlan.resource.nephio.org/v1alpha1.VLANClaim.smf-ran-n4
