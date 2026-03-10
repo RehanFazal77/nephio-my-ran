@@ -1,0 +1,58 @@
+# DaemonSet to install standard CNI plugins (including macvlan) on every node
+# This runs as an init container that copies the plugins to /opt/cni/bin
+# then the main container sleeps to keep the DaemonSet running
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: # kpt-merge: kube-system/cni-plugins-installer
+  name: cni-plugins-installer
+  namespace: kube-system
+  labels:
+    app: cni-plugins-installer
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'apps|DaemonSet|kube-system|cni-plugins-installer'
+spec:
+  selector:
+    matchLabels:
+      app: cni-plugins-installer
+  template:
+    metadata:
+      labels:
+        app: cni-plugins-installer
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      initContainers:
+      - name: install-cni-plugins
+        image: ghcr.io/containernetworking/plugins:v1.4.0
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Installing CNI plugins to /host/opt/cni/bin..."
+          cp -f /opt/cni/bin/* /host/opt/cni/bin/ 2>/dev/null || true
+          # Verify macvlan is installed
+          if [ -f /host/opt/cni/bin/macvlan ]; then
+            echo "macvlan plugin installed successfully"
+          else
+            echo "WARNING: macvlan not found in image, downloading..."
+            CNI_VERSION=v1.4.0
+            wget -qO- "https://github.com/containernetworking/plugins/releases/download/${CNI_VERSION}/cni-plugins-linux-amd64-${CNI_VERSION}.tgz" | tar -C /host/opt/cni/bin -xz
+            echo "CNI plugins downloaded and installed"
+          fi
+          ls -la /host/opt/cni/bin/macvlan
+          echo "Done!"
+        volumeMounts:
+        - name: cni-bin
+          mountPath: /host/opt/cni/bin
+        securityContext:
+          privileged: true
+      containers:
+      - name: pause
+        image: registry.k8s.io/pause:3.9
+      volumes:
+      - name: cni-bin
+        hostPath:
+          path: /opt/cni/bin
+          type: DirectoryOrCreate
