@@ -42,17 +42,16 @@ status:
     status: "True"
     message: injected resource "ran" from cluster
     reason: ConfigInjected
-  - message: 'rpc error: code = Unknown desc = dynamic claim: no available routes based on the selector labels map[nephio.org/address-family:ipv4 nephio.org/cluster-name:ran]'
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n4
-    status: "False"
+    status: "True"
     type: ipam.resource.nephio.org/v1alpha1.IPClaim.smf-ran-n4-ipv4
-  - message: create initial resource
+  - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n4
-    status: "False"
+    status: "True"
     type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.smf-ran-n4
-  - message: not ready
-    reason: Specialize
-    status: "False"
+  - reason: Ready
+    status: "True"
     type: nephio.org.Specializer.specialize
   - message: child local resource -> done
     reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
@@ -62,8 +61,8 @@ status:
     status: "True"
     type: req.nephio.org/v1alpha1.Interface.n11
     reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
-  - message: create initial resource condition
-    status: "False"
+  - message: update done
+    status: "True"
     type: req.nephio.org/v1alpha1.Interface.n4
     reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
   - message: update done
@@ -74,6 +73,6 @@ status:
     reason: req.nephio.org/v1alpha1.Interface.n4
     status: "True"
     type: vlan.resource.nephio.org/v1alpha1.VLANClaim.smf-ran-n4
-  - message: update for condition
-    status: "False"
+  - message: update done
+    status: "True"
     type: workload.nephio.org/v1alpha1.NFDeployment.smf-ran

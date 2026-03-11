@@ -12,3 +12,9 @@ spec:
     name: vpc-internal
   cniType: macvlan
   attachmentType: vlan
+status:
+  ipClaimStatus:
+  - prefix: 172.1.0.0/16
+    gateway: ""
+  vlanClaimStatus:
+    vlanID: 5

@@ -11,3 +11,18 @@ spec:
   - name: oai-smf-config
     apiVersion: workload.nephio.org/v1alpha1
     kind: NFConfig
+  networkInstances:
+  - name: vpc-internal
+    interfaces:
+    - n4
+  interfaces:
+  - name: n4
+    ipv4:
+      address: 172.1.0.0/16
+      gateway: ""
+    vlanID: 5
+  capacity:
+    maxDownlinkThroughput: "0"
+    maxNFConnections: 5
+    maxSessions: 500
+    maxUplinkThroughput: "0"

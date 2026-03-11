@@ -14,4 +14,4 @@ spec:
       nephio.org/cluster-name: ran
   networkInstance:
     name: vpc-internal
-status: {}
+status: {prefix: 172.1.0.0/16, gateway: ""}
