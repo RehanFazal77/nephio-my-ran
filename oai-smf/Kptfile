@@ -42,10 +42,22 @@ status:
     status: "True"
     message: injected resource "ran" from cluster
     reason: ConfigInjected
+  - message: 'rpc error: code = Unknown desc = dynamic claim: no available routes based on the selector labels map[nephio.org/address-family:ipv4 nephio.org/cluster-name:ran]'
+    reason: req.nephio.org/v1alpha1.Interface.n4
+    status: "False"
+    type: ipam.resource.nephio.org/v1alpha1.IPClaim.smf-ran-n4-ipv4
+  - message: create initial resource
+    reason: req.nephio.org/v1alpha1.Interface.n4
+    status: "False"
+    type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.smf-ran-n4
   - message: not ready
     reason: Specialize
     status: "False"
     type: nephio.org.Specializer.specialize
+  - message: child local resource -> done
+    reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
+    status: "True"
+    type: req.nephio.org/v1alpha1.Capacity.control-plane
   - message: update done
     status: "True"
     type: req.nephio.org/v1alpha1.Interface.n11
@@ -58,22 +70,10 @@ status:
     status: "True"
     type: req.nephio.org/v1alpha1.Interface.sbi
     reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
-  - message: update for condition
-    status: "False"
-    type: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
-  - message: child local resource -> done
-    reason: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
-    status: "True"
-    type: req.nephio.org/v1alpha1.Capacity.control-plane
-  - message: 'rpc error: code = Unknown desc = dynamic claim: no available routes based on the selector labels map[nephio.org/address-family:ipv4 nephio.org/cluster-name:ran]'
-    reason: req.nephio.org/v1alpha1.Interface.n4
-    status: "False"
-    type: ipam.resource.nephio.org/v1alpha1.IPClaim.smf-ran-n4-ipv4
-  - message: create initial resource
-    reason: req.nephio.org/v1alpha1.Interface.n4
-    status: "False"
-    type: k8s.cni.cncf.io/v1.NetworkAttachmentDefinition.smf-ran-n4
   - message: update done
     reason: req.nephio.org/v1alpha1.Interface.n4
     status: "True"
     type: vlan.resource.nephio.org/v1alpha1.VLANClaim.smf-ran-n4
+  - message: update for condition
+    status: "False"
+    type: workload.nephio.org/v1alpha1.NFDeployment.smf-ran
