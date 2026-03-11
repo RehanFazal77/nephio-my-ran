@@ -1,0 +1,28 @@
+apiVersion: workload.nephio.org/v1alpha1
+kind: NFDeployment
+metadata: # kpt-merge: smf-example/smf-example
+  name: smf-ran
+  namespace: oai-core
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'workload.nephio.org|NFDeployment|smf-example|smf-example'
+spec:
+  provider: smf.openairinterface.org
+  parametersRefs:
+  - name: oai-smf-config
+    apiVersion: workload.nephio.org/v1alpha1
+    kind: NFConfig
+  networkInstances:
+  - name: vpc-internal
+    interfaces:
+    - n4
+  interfaces:
+  - name: n4
+    ipv4:
+      address: 172.1.0.0/16
+      gateway: ""
+    vlanID: 5
+  capacity:
+    maxDownlinkThroughput: "0"
+    maxNFConnections: 5
+    maxSessions: 500
+    maxUplinkThroughput: "0"
